@@ -4,6 +4,8 @@ import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { connect } from 'react-redux';
 
+import Add from '../Add';
+
 //Main App Component and Setup React Toastify
 
 class App extends Component {
@@ -21,6 +23,8 @@ class App extends Component {
                     draggable
                     pauseOnHover
                     />
+
+                    <Add />
     
       </div>
     );
