@@ -13,22 +13,23 @@ class App extends Component {
     return (
       <div>
         <ToastContainer
-                    position="top-right"
-                    autoClose={3000}
-                    hideProgressBar={false}
-                    newestOnTop
-                    closeOnClick
-                    rtl={false}
-                    pauseOnVisibilityChange
-                    draggable
-                    pauseOnHover
-                    />
+          position="top-right"
+          autoClose={3000}
+          hideProgressBar={false}
+          newestOnTop
+          closeOnClick
+          rtl={false}
+          pauseOnVisibilityChange
+          draggable
+          pauseOnHover
+        />
+        <h2>Testing Component</h2>
 
-                    <Add />
-    
+        <Add />
+
       </div>
     );
   }
 }
 
-export default connect(null,null)(App);
+export default connect(null, null)(App);

@@ -1,14 +1,9 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import App from '../../Components/Add';
-// import { Provider } from 'react-redux';
-// import store from '../../Components/Redux/store';
+import Add from '../../Components/Add';
 
-
-window.baseURL = window.location.hostname === 'localhost' ? 'http://localhost:8080' : '';
-
-it('renders without crashing', () => {
+it('renders Add Component', () => {
     const div = document.createElement('div');
-    ReactDOM.render(<App />, div);
+    ReactDOM.render(<Add />, div);
     ReactDOM.unmountComponentAtNode(div);
 });
