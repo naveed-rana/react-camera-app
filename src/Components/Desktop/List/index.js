@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import ListItem from '../ListItem/index';
+import ListItem from '../ListItem';
 
 // /_*
 //  _ Render a list of items

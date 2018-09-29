@@ -4,7 +4,8 @@ import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { connect } from 'react-redux';
 
-import Add from '../Add';
+// import Add from '../Desktop/Add';
+import Home from '../Home';
 
 //Main App Component and Setup React Toastify
 
@@ -25,7 +26,7 @@ class App extends Component {
         />
         <h2>Testing Component</h2>
 
-        <Add />
+        <Home />
 
       </div>
     );

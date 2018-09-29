@@ -1,8 +1,15 @@
 import React from 'react';
-// import { shallow } from '../../setup/setupEnzyme';
-import { mount } from '../../setup/setupEnzyme';
+//Shalloe Rendering
+// import { shallow } from '../../config/enzyme';
 
-import List from '../../Components/List';
+//Full Rendering
+import { mount } from '../../config/enzyme';
+
+//Static rendering
+// import { wrap } from 'module';
+// import { render } from '../../config/enzyme';
+
+import List from '../../Components/Desktop/List';
 
 describe('List tests', () => {
 
@@ -65,5 +72,18 @@ describe('List tests', () => {
         expect(wrapper.find('.list-items')).toBeDefined();
         expect(wrapper.find('.item')).toHaveLength(items.length);
     });
+
+    //////////
+    // Static Rendering
+    //////////
+
+    // it('renders list-items', () => {
+    //     const items = ['one', 'two', 'three'];
+    //     const wrapper = render(<List items={items} />);
+    //     wrapper.addClass('foo');
+    //     // Expect the wrapper object to be defined
+    //     expect(wrapper.find('.list-items')).toBeDefined();
+    //     expect(wrapper.find('.item')).toHaveLength(items.length);
+    // });
 
 });
