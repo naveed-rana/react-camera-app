@@ -24,7 +24,7 @@ class App extends Component {
           draggable
           pauseOnHover
         />
-        <h2>Testing Component</h2>
+        <h2>React Redux Boilerplate</h2>
 
         <Home />
 
