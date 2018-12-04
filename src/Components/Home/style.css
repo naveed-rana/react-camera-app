@@ -1,0 +1,142 @@
+
+.cancel{
+
+    position: absolute;
+    bottom: 20px;
+    left: 45%;
+    z-index: 65;
+    width: 68px;
+    height: 68px;
+    
+}
+
+.cancel:hover{
+    cursor: pointer;
+}
+
+
+#imgShow{
+    -webkit-filter: brightness(20%);/* Safari 6.0 - 9.0 */
+    filter: brightness(20%);
+}
+
+.loader{
+    position: absolute;
+    top:40%;
+    left: 40%;
+    z-index: 15004340;
+    -webkit-filter: contrast(400%); /* Safari 6.0 - 9.0 */
+    filter: contrast(400%)
+}
+
+#videoContainer {
+    box-sizing: border-box;
+    height: 100vh;
+    overflow: hidden;
+    width: 100%;
+    
+ }
+ video {
+    height: 100vh;
+    overflow: hidden;
+    max-width: 100%;
+ }
+ .imgShow{
+     width: 100% !important;
+     height: 100vh !important;
+ }
+
+ #container-circles{
+    left: 46%;
+ }
+
+ #inner-circle{
+     border-radius: 20px;
+     margin-left: 0px;
+     padding: 10px;
+     width: 160px;
+     height: inherit;
+     font-weight: bold; 
+     cursor: pointer;
+ }
+ #outer-circle{
+    border-radius: 0px;
+    width:inherit;
+    height: inherit;
+  
+  
+ }
+
+ #displayContainer{
+
+     position: absolute;
+     bottom: 0;
+     color: white;
+     z-index: 150;
+     text-align: center;
+     background-color: rgb(0, 0, 0,.5);
+     width: 100%;
+     padding-top: 10px;
+
+ }
+
+ .shade{
+     border-radius: 50%;
+ }
+ .shadesDetails{
+   padding:0px 15px;
+   font-size: 14px;
+ }
+
+ .makeLink{
+     color:darkred;
+     cursor: pointer;
+     font-weight: bold;
+     text-decoration: underline;
+     
+ }
+ .retake{
+     cursor: pointer;
+ }
+
+ .topHeader{
+    position: absolute;
+    top: 0;
+    color: white;
+    z-index: 150;
+    text-align: center;
+    background-color: rgb(0, 0, 0,.2);
+    width: 100%;
+ }
+ .aiButton{
+     margin-left: 30px;
+     background-color: red;
+     color: white;
+     padding: 1px 15px;
+     border-radius: 3px;
+     font-weight: bold;
+ }
+
+@media screen and (max-width: 500px) {
+   
+.loader{
+    top:35%;
+    left: 22%;
+}
+
+.cancel{
+
+    left: 40%;
+    
+}
+.imgShow{
+
+    height: 100% !important;
+}
+
+#container-circles{
+    left: 33%;
+ }
+
+}
+
