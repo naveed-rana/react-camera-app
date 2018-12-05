@@ -74,7 +74,7 @@
      color: white;
      z-index: 150;
      text-align: center;
-     background-color: rgb(0, 0, 0,.5);
+     /* background-color: rgb(0, 0, 0,.5); */
      width: 100%;
      padding-top: 10px;
 
@@ -105,7 +105,7 @@
     color: white;
     z-index: 150;
     text-align: center;
-    background-color: rgb(0, 0, 0,.2);
+    /* background-color: rgb(0, 0, 0,.2); */
     width: 100%;
  }
  .aiButton{
@@ -115,6 +115,12 @@
      padding: 1px 15px;
      border-radius: 3px;
      font-weight: bold;
+ }
+
+ .showMore{
+    cursor: pointer;
+    font-weight: bold;
+    text-decoration: underline; 
  }
 
 @media screen and (max-width: 500px) {

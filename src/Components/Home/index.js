@@ -21,7 +21,8 @@ class App extends Component {
             loader: false,
             card:false,
             url:'',
-            imgSrc:'310'
+            imgSrc:'310',
+            index: 0
         }
     }
 
@@ -59,7 +60,7 @@ class App extends Component {
                 this.setState({loader:false});
                 if(res.data.predictions[0]){
                  let url = `https://www.fentybeauty.com/pro-filtr/soft-matte-longwear-foundation/FB30006.html?dwvar_FB30006_color=FB0${res.data.predictions[0].label.slice(0, 3)}`;
-                this.setState({url,imgSrc:res.data.predictions[0].label.slice(0, 3),card:true})
+                this.setState({index:0,url,imgSrc:res.data.predictions[0].label.slice(0, 3),card:true})
                 }
 
             }).catch(err => {
@@ -107,13 +108,30 @@ class App extends Component {
     }
 
     urlHandler = () => {
-        window.location.href = this.state.url;
+        
+        window.open(this.state.url, '_blank');
+        // window.location.href = this.state.url;
     }
 
+    urlHandlerForOtherSite = (url) =>{
+        window.open(url, '_blank');
+    }
+   
+    handleChangeIndex = index => {
+        this.setState({
+          index,
+        });
+      };
+
+      showMoreHandler = nextIndex =>{
+        this.setState({index:nextIndex})
+      }
 
 
 
     render() {
+
+        const { index } = this.state;
         
         return (
             <div className="App">
@@ -156,29 +174,89 @@ class App extends Component {
                 }
               {this.state.card ?      
             <div id="displayContainer">
-            <SwipeableViews enableMouseEvents>
+            <SwipeableViews enableMouseEvents index={index} 
+            onChangeIndex={this.handleChangeIndex}>
             <div>
                <div>
                 <img width="100" height="100" className="shade" src={require(`../images/Shades/${this.state.imgSrc}.jpg`)} alt="shade"/>
                 <br/>
-                Best Shade For You!
+                Found Your Shade
                 </div>
                 <p className="shadesDetails">A soft matte, longwear foundation with buildable, medium to full coverage, in a boundary-breaking range of 40 shades.</p>
-                <p className="makeLink" onClick={this.urlHandler}>Buy Shade Now</p>
+                <p className="makeLink" onClick={this.urlHandler}>Add to Bag</p>
+                <span onClick={()=> this.showMoreHandler(1)} className="showMore"><small>Show me More</small> </span>
                 <p><img width="30" className="retake" onClick={this.cancelEvent} src={undo} alt=""/></p>  
             </div>
-
-
+            
+            {/* -----------swap 1------------ */}
              <div>
                <div>
-                <img width="100" height="100" className="shade" src={require(`../images/Shades/${this.state.imgSrc}.jpg`)} alt="shade"/>
+                <img width="100" height="100" className="shade" src={require(`../images/Shades/swap1.jpg`)} alt="shade"/>
                 <br/>
-                Best Shade For You!
+                Lock-It Foundation
                 </div>
-                <p className="shadesDetails">A soft matte, longwear foundation with buildable, medium to full coverage, in a boundary-breaking range of 40 shades.</p>
-                <p className="makeLink" onClick={this.urlHandler}>Buy Shade Now</p>
+                <p className="shadesDetails">Creamy and pigmented, Lock-It Foundation is the only 24-hour-wear liquid formula we can count on to create a perfect canvas on ANY skin type! With 30 shades and undertones, everyone can rock a flawless complexion without ever touching up</p>
+                <p className="makeLink" onClick={() => this.urlHandlerForOtherSite('https://www.katvondbeauty.com/face/foundation/lock-it-foundation/20005.html?dwvar_20005_color=2045L')}>Add to Bag</p>
+                <span onClick={()=> this.showMoreHandler(2)} className="showMore"><small>Show me More</small> </span>
                 <p><img width="30" className="retake" onClick={this.cancelEvent} src={undo} alt=""/></p>  
             </div>
+            {/* ----------- end of swap 1------------ */}
+
+            {/* -----------swap 2------------ */}
+            <div>
+               <div>
+                <img width="100" height="100" className="shade" src={require(`../images/Shades/swap2.jpg`)} alt="shade"/>
+                <br/>
+                Shameless
+                </div>
+                <p className="shadesDetails">Self-setting finish. Invisible SPF Foundation Innovation. (YOU)thful, only better.An innovative, medium foundation with up to 24-hour longwear and first-to-market, flashback-free SPF 25 for a youthful look.</p>
+                <p className="makeLink" onClick={() => this.urlHandlerForOtherSite('https://www.marcjacobsbeauty.com/shameless/youthful-look-24-hour-foundation-spf-25/MJ30017.html?dwvar_MJ30017_color=MJ3097')}>Add to Bag</p>
+                <span onClick={()=> this.showMoreHandler(3)} className="showMore"><small>Show me More</small> </span>
+                <p><img width="30" className="retake" onClick={this.cancelEvent} src={undo} alt=""/></p>  
+            </div>
+            {/* ----------- end of swap 2------------ */}
+
+            {/* -----------swap 3------------ */}
+            <div>
+               <div>
+                <img width="100" height="100" className="shade" src={require(`../images/Shades/swap3.jpg`)} alt="shade"/>
+                <br/>
+                Ultra HD Foundation Petite Limited Edition 
+                </div>
+                <p className="shadesDetails">No more waiting, no more dating: find your perfect match with these limited edition petite bottles of our best-selling foundation, a multiple award winner with buildable to medium coverage, available...</p>
+                <p className="makeLink" onClick={() => this.urlHandlerForOtherSite('https://www.makeupforever.com/us/en-us/make-up/face/foundation/ultra-hd-foundation-petite?sku=8705')}>Add to Bag</p>
+                <span onClick={()=> this.showMoreHandler(4)} className="showMore"><small>Show me More</small> </span>
+                <p><img width="30" className="retake" onClick={this.cancelEvent} src={undo} alt=""/></p>  
+            </div>
+            {/* ----------- end of swap 3------------ */}
+         
+             {/* -----------swap 4------------ */}
+            <div>
+               <div>
+                <img width="100" height="100" className="shade" src={require(`../images/Shades/swap4.webp`)} alt="shade"/>
+                <br/>
+                Hello Happy Soft Blur Foundation 
+                </div>
+                <p className="shadesDetails">light-medium coverage liquid foundation broad spectrum SPF 15 sunscreen</p>
+                <p className="makeLink" onClick={() => this.urlHandlerForOtherSite('https://www.benefitcosmetics.com/us/en/product/hello-happy-soft-blur-foundation')}>Add to Bag</p>
+                <span onClick={()=> this.showMoreHandler(5)} className="showMore"><small>Show me More</small> </span>
+                <p><img width="30" className="retake" onClick={this.cancelEvent} src={undo} alt=""/></p>  
+            </div>
+            {/* ----------- end of swap 4------------ */}
+
+            {/* -----------swap 5------------ */}
+            <div>
+               <div>
+                <img width="100" height="100" className="shade" src={require(`../images/Shades/swap5.jpg`)} alt="shade"/>
+                <br/>
+                Natural Radiant Longwear Foundation 
+                </div>
+                <p className="shadesDetails" style={{textTransform: 'lowercase'}}>A UNIQUELY LIGHTWEIGHT FOUNDATION THAT PROVIDES 16 HOURS OF FADE-RESISTANT WEAR WITH FULL-POWERED RADIANCE.</p>
+                <p className="makeLink" onClick={() => this.urlHandlerForOtherSite('https://www.narscosmetics.com/USA/mali-natural-radiant-longwear-foundation/0607845066323.html')}>Add to Bag</p>
+                <span onClick={()=> this.showMoreHandler(0)} className="showMore"><small>Show me More</small> </span>
+                <p><img width="30" className="retake" onClick={this.cancelEvent} src={undo} alt=""/></p>  
+            </div>
+            {/* ----------- end of swap 5------------ */}     
             </SwipeableViews>
             </div>
             :""}
