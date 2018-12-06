@@ -16,13 +16,15 @@ class App extends Component {
         this.state = {
             imgShow: false,
             image: '',
-            cameraOn:true,
+            cameraOn:false,
             blur: false,
             loader: false,
-            card:false,
-            url:'',
+            card:true,
+            url:'https://www.fentybeauty.com/pro-filtr/soft-matte-longwear-foundation/FB30006.html?dwvar_FB30006_color=FB0310',
             imgSrc:'310',
-            index: 0
+            index: 0,
+            urlSrc:'',
+            iframe:false
         }
     }
 
@@ -75,7 +77,7 @@ class App extends Component {
     }
 
     onCameraStart(stream) {
-        document.getElementById('inner-circle').innerHTML = "Start Shade Finder";
+        document.getElementById('inner-circle').innerHTML = "ADD TO BAG";
         console.log('onCameraStart');
     }
 
@@ -109,12 +111,11 @@ class App extends Component {
 
     urlHandler = () => {
         
-        window.open(this.state.url, '_blank');
-        // window.location.href = this.state.url;
+        this.setState({urlSrc:this.state.url,card:false,iframe:true});
     }
 
     urlHandlerForOtherSite = (url) =>{
-        window.open(url, '_blank');
+       this.setState({urlSrc:url,card:false,iframe:true});
     }
    
     handleChangeIndex = index => {
@@ -125,6 +126,10 @@ class App extends Component {
 
       showMoreHandler = nextIndex =>{
         this.setState({index:nextIndex})
+      }
+
+      onIframeCloseHandler = () =>{
+        this.setState({iframe:false,card:true});
       }
 
 
@@ -184,7 +189,7 @@ class App extends Component {
                 </div>
                 <p className="shadesDetails">A soft matte, longwear foundation with buildable, medium to full coverage, in a boundary-breaking range of 40 shades.</p>
                 <p className="makeLink" onClick={this.urlHandler}>Add to Bag</p>
-                <span onClick={()=> this.showMoreHandler(1)} className="showMore"><small>Show me More</small> </span>
+                <span onClick={()=> this.showMoreHandler(1)} className="showMore"><small>Shop More Eye</small> </span>
                 <p><img width="30" className="retake" onClick={this.cancelEvent} src={undo} alt=""/></p>  
             </div>
             
@@ -197,7 +202,7 @@ class App extends Component {
                 </div>
                 <p className="shadesDetails">Creamy and pigmented, Lock-It Foundation is the only 24-hour-wear liquid formula we can count on to create a perfect canvas on ANY skin type! With 30 shades and undertones, everyone can rock a flawless complexion without ever touching up</p>
                 <p className="makeLink" onClick={() => this.urlHandlerForOtherSite('https://www.katvondbeauty.com/face/foundation/lock-it-foundation/20005.html?dwvar_20005_color=2045L')}>Add to Bag</p>
-                <span onClick={()=> this.showMoreHandler(2)} className="showMore"><small>Show me More</small> </span>
+                <span onClick={()=> this.showMoreHandler(2)} className="showMore"><small>Shop More Eye</small> </span>
                 <p><img width="30" className="retake" onClick={this.cancelEvent} src={undo} alt=""/></p>  
             </div>
             {/* ----------- end of swap 1------------ */}
@@ -211,7 +216,7 @@ class App extends Component {
                 </div>
                 <p className="shadesDetails">Self-setting finish. Invisible SPF Foundation Innovation. (YOU)thful, only better.An innovative, medium foundation with up to 24-hour longwear and first-to-market, flashback-free SPF 25 for a youthful look.</p>
                 <p className="makeLink" onClick={() => this.urlHandlerForOtherSite('https://www.marcjacobsbeauty.com/shameless/youthful-look-24-hour-foundation-spf-25/MJ30017.html?dwvar_MJ30017_color=MJ3097')}>Add to Bag</p>
-                <span onClick={()=> this.showMoreHandler(3)} className="showMore"><small>Show me More</small> </span>
+                <span onClick={()=> this.showMoreHandler(3)} className="showMore"><small>Shop More Eye</small> </span>
                 <p><img width="30" className="retake" onClick={this.cancelEvent} src={undo} alt=""/></p>  
             </div>
             {/* ----------- end of swap 2------------ */}
@@ -225,7 +230,7 @@ class App extends Component {
                 </div>
                 <p className="shadesDetails">No more waiting, no more dating: find your perfect match with these limited edition petite bottles of our best-selling foundation, a multiple award winner with buildable to medium coverage, available...</p>
                 <p className="makeLink" onClick={() => this.urlHandlerForOtherSite('https://www.makeupforever.com/us/en-us/make-up/face/foundation/ultra-hd-foundation-petite?sku=8705')}>Add to Bag</p>
-                <span onClick={()=> this.showMoreHandler(4)} className="showMore"><small>Show me More</small> </span>
+                <span onClick={()=> this.showMoreHandler(4)} className="showMore"><small>Shop More Eye</small> </span>
                 <p><img width="30" className="retake" onClick={this.cancelEvent} src={undo} alt=""/></p>  
             </div>
             {/* ----------- end of swap 3------------ */}
@@ -239,7 +244,7 @@ class App extends Component {
                 </div>
                 <p className="shadesDetails">light-medium coverage liquid foundation broad spectrum SPF 15 sunscreen</p>
                 <p className="makeLink" onClick={() => this.urlHandlerForOtherSite('https://www.benefitcosmetics.com/us/en/product/hello-happy-soft-blur-foundation')}>Add to Bag</p>
-                <span onClick={()=> this.showMoreHandler(5)} className="showMore"><small>Show me More</small> </span>
+                <span onClick={()=> this.showMoreHandler(5)} className="showMore"><small>Shop More Eye</small> </span>
                 <p><img width="30" className="retake" onClick={this.cancelEvent} src={undo} alt=""/></p>  
             </div>
             {/* ----------- end of swap 4------------ */}
@@ -253,16 +258,22 @@ class App extends Component {
                 </div>
                 <p className="shadesDetails" style={{textTransform: 'lowercase'}}>A UNIQUELY LIGHTWEIGHT FOUNDATION THAT PROVIDES 16 HOURS OF FADE-RESISTANT WEAR WITH FULL-POWERED RADIANCE.</p>
                 <p className="makeLink" onClick={() => this.urlHandlerForOtherSite('https://www.narscosmetics.com/USA/mali-natural-radiant-longwear-foundation/0607845066323.html')}>Add to Bag</p>
-                <span onClick={()=> this.showMoreHandler(0)} className="showMore"><small>Show me More</small> </span>
+                <span onClick={()=> this.showMoreHandler(0)} className="showMore"><small>Shop More Eye</small> </span>
                 <p><img width="30" className="retake" onClick={this.cancelEvent} src={undo} alt=""/></p>  
             </div>
             {/* ----------- end of swap 5------------ */}     
             </SwipeableViews>
             </div>
             :""}
-
             
-
+            {this.state.iframe ? 
+            <div className="iframeContainer">
+            <img onClick={this.onIframeCloseHandler} className="closeIframe" src={require('../images/cancel.png')} alt="close"/>
+            <iframe width="100%" onLoad={()=> console.log("onready")
+            } height={window.screen.height/2} title="some" src={this.state.urlSrc} frameBorder="0">
+            </iframe>
+            </div>            
+            :""}
 
              <div ref={el => { this.el = el; }} />
             </div>
