@@ -4,6 +4,7 @@ import 'react-html5-camera-photo/build/css/index.css';
 import Loader from '../images/loader.gif';
 import cancel from '../images/retake.png';
 import undo from '../images/undo.png';
+import loaderIframe from '../images/loaderiframe.gif';
 import axios from 'axios';
 import './style.css';
 
@@ -16,15 +17,16 @@ class App extends Component {
         this.state = {
             imgShow: false,
             image: '',
-            cameraOn:false,
+            cameraOn:true,
             blur: false,
             loader: false,
-            card:true,
-            url:'https://www.fentybeauty.com/pro-filtr/soft-matte-longwear-foundation/FB30006.html?dwvar_FB30006_color=FB0310',
+            card:false,
+            url:'',
             imgSrc:'310',
             index: 0,
             urlSrc:'',
-            iframe:false
+            iframe:false,
+            iframeLoader:false,
         }
     }
 
@@ -111,11 +113,11 @@ class App extends Component {
 
     urlHandler = () => {
         
-        this.setState({urlSrc:this.state.url,card:false,iframe:true});
+        this.setState({urlSrc:this.state.url,card:false,iframe:true,iframeLoader:true});
     }
 
     urlHandlerForOtherSite = (url) =>{
-       this.setState({urlSrc:url,card:false,iframe:true});
+       this.setState({urlSrc:url,card:false,iframe:true,iframeLoader:true});
     }
    
     handleChangeIndex = index => {
@@ -129,9 +131,12 @@ class App extends Component {
       }
 
       onIframeCloseHandler = () =>{
-        this.setState({iframe:false,card:true});
+        this.setState({iframe:false,card:true,iframeLoader:false});
       }
-
+     
+      onLoadHandler = () =>{
+        this.setState({iframeLoader:false});
+      }
 
 
     render() {
@@ -153,7 +158,7 @@ class App extends Component {
                             imageType={IMAGE_TYPES.JPG}
                             imageCompression={0.97}
                             isMaxResolution={true}
-                            isImageMirror={false}
+                            isImageMirror={true}
                             isDisplayStartCameraError={true}
                             sizeFactor={1}
                             onCameraStart={(stream) => { this.onCameraStart(stream); }}
@@ -174,7 +179,9 @@ class App extends Component {
                     </div> 
                 }
                   {this.state.loader ? 
+                  <div className="mainloaderContainer"> 
                   <img className="loader" src={Loader} alt="" />
+                  </div>
                   :""
                 }
               {this.state.card ?      
@@ -269,11 +276,16 @@ class App extends Component {
             {this.state.iframe ? 
             <div className="iframeContainer">
             <img onClick={this.onIframeCloseHandler} className="closeIframe" src={require('../images/cancel.png')} alt="close"/>
-            <iframe width="100%" onLoad={()=> console.log("onready")
-            } height={window.screen.height/2} title="some" src={this.state.urlSrc} frameBorder="0">
+            <iframe width="100%" onLoad={this.onLoadHandler} height={window.screen.height/2} title="some" src={this.state.urlSrc} frameBorder="0">
             </iframe>
             </div>            
             :""}
+            
+            {this.state.iframeLoader ? 
+            <div className="loaderContainer">
+            <img className="iframeLoader" src={loaderIframe} alt=""/>
+            </div>
+            : "" }
 
              <div ref={el => { this.el = el; }} />
             </div>
