@@ -6,9 +6,12 @@
     "axios": "^0.18.0",
     "react": "^16.5.1",
     "react-dom": "^16.5.1",
+    "react-facebook": "^6.0.15",
     "react-html5-camera-photo": "^1.2.9",
+    "react-marquee-double": "^0.1.8",
     "react-scripts": "^2.1.1",
-    "react-swipeable-views": "^0.13.0"
+    "react-swipeable-views": "^0.13.0",
+    "react-swipeable-views-utils": "^0.13.0"
   },
   "scripts": {
     "start": "react-scripts start",

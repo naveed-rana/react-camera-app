@@ -10,6 +10,10 @@ import './style.css';
 
 import SwipeableViews from 'react-swipeable-views';
 
+
+
+var intervalID;
+
 class App extends Component {
   //constructor and intial state define here
     constructor(props) {
@@ -17,10 +21,10 @@ class App extends Component {
         this.state = {
             imgShow: false,
             image: '',
-            cameraOn:true,
+            cameraOn:false,
             blur: false,
             loader: false,
-            card:false,
+            card:true,
             url:'',
             imgSrc:'310',
             index: 0,
@@ -79,7 +83,7 @@ class App extends Component {
     }
 
     onCameraStart(stream) {
-        document.getElementById('inner-circle').innerHTML = "ADD TO BAG";
+        document.getElementById('inner-circle').innerHTML = "START SHADE FINDER";
         console.log('onCameraStart');
     }
 
@@ -128,6 +132,7 @@ class App extends Component {
 
       showMoreHandler = nextIndex =>{
         this.setState({index:nextIndex})
+        this.intervalManager(true);
       }
 
       onIframeCloseHandler = () =>{
@@ -137,6 +142,29 @@ class App extends Component {
       onLoadHandler = () =>{
         this.setState({iframeLoader:false});
       }
+
+      urlHandlerForNewWindow = (url) =>{
+        window.open(url, 'toolbar=no, location=no, directories=no, status=no, menubar=no, scrollbars=no, resizable=no, copyhistory=no');
+      }
+
+      intervalManager = (flag) => {
+        if(flag)
+        intervalID =  setInterval(()=>{
+            this.setState((prevstate) => {
+                if(prevstate.index === 5){
+                    return {
+                        index:0
+                      };
+                }
+                else{
+                return {
+                  index: prevstate.index + 1
+                };}
+              });
+          }, 10000);
+        else
+          clearInterval(intervalID);
+     }
 
 
     render() {
@@ -186,30 +214,42 @@ class App extends Component {
                 }
               {this.state.card ?      
             <div id="displayContainer">
-            <SwipeableViews enableMouseEvents index={index} 
+            <SwipeableViews
+            springConfig={{duration: '10s', easeFunction: 'linear', delay: '0s'}} 
+            enableMouseEvents index={index} 
             onChangeIndex={this.handleChangeIndex}>
             <div>
                <div>
-                <img width="100" height="100" className="shade" src={require(`../images/Shades/${this.state.imgSrc}.jpg`)} alt="shade"/>
+                <img onClick={()=>this.intervalManager(false)} width="100" height="100" className="shade" src={require(`../images/Shades/${this.state.imgSrc}.jpg`)} alt="shade"/>
                 <br/>
-                Found Your Shade
+                Found Your Best Shade!
                 </div>
-                <p className="shadesDetails">A soft matte, longwear foundation with buildable, medium to full coverage, in a boundary-breaking range of 40 shades.</p>
-                <p className="makeLink" onClick={this.urlHandler}>Add to Bag</p>
-                <span onClick={()=> this.showMoreHandler(1)} className="showMore"><small>Shop More Eye</small> </span>
+                <p className="shadesDetails"><b>FENTY BEAUTY BY RIHANNA</b></p>
+                <p className="makeLink" onClick={this.urlHandler}>
+                <span>
+                ENTER FENTY BEAUTY
+                </span>
+                </p>
+                <span onClick={()=> this.showMoreHandler(1)} className="showMoreFound"><small>FIND SHADE MYSELF</small> </span>
                 <p><img width="30" className="retake" onClick={this.cancelEvent} src={undo} alt=""/></p>  
             </div>
             
             {/* -----------swap 1------------ */}
              <div>
                <div>
-                <img width="100" height="100" className="shade" src={require(`../images/Shades/swap1.jpg`)} alt="shade"/>
+                <img onClick={()=>this.intervalManager(false)} width="100" height="100" className="shade" src={require(`../images/Shades/swap1.jpg`)} alt="shade"/>
                 <br/>
-                Lock-It Foundation
+                Kat Von D Lock-It Foundation
                 </div>
                 <p className="shadesDetails">Creamy and pigmented, Lock-It Foundation is the only 24-hour-wear liquid formula we can count on to create a perfect canvas on ANY skin type! With 30 shades and undertones, everyone can rock a flawless complexion without ever touching up</p>
-                <p className="makeLink" onClick={() => this.urlHandlerForOtherSite('https://www.katvondbeauty.com/face/foundation/lock-it-foundation/20005.html?dwvar_20005_color=2045L')}>Add to Bag</p>
-                <span onClick={()=> this.showMoreHandler(2)} className="showMore"><small>Shop More Eye</small> </span>
+                <p className="makeLink" onClick={() => this.urlHandlerForNewWindow('https://www.katvondbeauty.com/face/foundation/lock-it-foundation/20005.html?dwvar_20005_color=2045L')}>
+                <span>
+                ENTER KAT VON D BEAUTY
+                </span>
+                </p>
+                <span onClick={()=> this.showMoreHandler(2)} className="findMoreLockIt"><small>
+                FIND MORE
+                </small> </span>
                 <p><img width="30" className="retake" onClick={this.cancelEvent} src={undo} alt=""/></p>  
             </div>
             {/* ----------- end of swap 1------------ */}
@@ -217,13 +257,18 @@ class App extends Component {
             {/* -----------swap 2------------ */}
             <div>
                <div>
-                <img width="100" height="100" className="shade" src={require(`../images/Shades/swap2.jpg`)} alt="shade"/>
+                <img onClick={()=>this.intervalManager(false)} width="100" height="100" className="shade" src={require(`../images/Shades/swap2.jpg`)} alt="shade"/>
                 <br/>
-                Shameless
+                Marc Jacobs
                 </div>
                 <p className="shadesDetails">Self-setting finish. Invisible SPF Foundation Innovation. (YOU)thful, only better.An innovative, medium foundation with up to 24-hour longwear and first-to-market, flashback-free SPF 25 for a youthful look.</p>
-                <p className="makeLink" onClick={() => this.urlHandlerForOtherSite('https://www.marcjacobsbeauty.com/shameless/youthful-look-24-hour-foundation-spf-25/MJ30017.html?dwvar_MJ30017_color=MJ3097')}>Add to Bag</p>
-                <span onClick={()=> this.showMoreHandler(3)} className="showMore"><small>Shop More Eye</small> </span>
+                <p className="makeLink" onClick={() => this.urlHandlerForNewWindow('https://www.marcjacobsbeauty.com/shameless/youthful-look-24-hour-foundation-spf-25/MJ30017.html?dwvar_MJ30017_color=MJ3097')}>
+                <span>            
+                    ENTER KAT MARC JACOBS
+                </span>
+                </p>
+                <span onClick={()=> this.showMoreHandler(3)} className="findMoreMarc"><small>
+                FIND MORE </small> </span>
                 <p><img width="30" className="retake" onClick={this.cancelEvent} src={undo} alt=""/></p>  
             </div>
             {/* ----------- end of swap 2------------ */}
@@ -231,13 +276,18 @@ class App extends Component {
             {/* -----------swap 3------------ */}
             <div>
                <div>
-                <img width="100" height="100" className="shade" src={require(`../images/Shades/swap3.jpg`)} alt="shade"/>
+                <img onClick={()=>this.intervalManager(false)} width="100" height="100" className="shade" src={require(`../images/Shades/swap3.jpg`)} alt="shade"/>
                 <br/>
-                Ultra HD Foundation Petite Limited Edition 
+                Make Up Forever 
                 </div>
                 <p className="shadesDetails">No more waiting, no more dating: find your perfect match with these limited edition petite bottles of our best-selling foundation, a multiple award winner with buildable to medium coverage, available...</p>
-                <p className="makeLink" onClick={() => this.urlHandlerForOtherSite('https://www.makeupforever.com/us/en-us/make-up/face/foundation/ultra-hd-foundation-petite?sku=8705')}>Add to Bag</p>
-                <span onClick={()=> this.showMoreHandler(4)} className="showMore"><small>Shop More Eye</small> </span>
+                <p className="makeLink" onClick={() => this.urlHandlerForNewWindow('https://www.makeupforever.com/us/en-us/make-up/face/foundation/ultra-hd-foundation-petite?sku=8705')}>
+
+                <span>
+                ENTER MAKE UP FOREVER
+                </span>
+                </p>
+                <span onClick={()=> this.showMoreHandler(4)} className="showMore"><small>FIND MORE </small> </span>
                 <p><img width="30" className="retake" onClick={this.cancelEvent} src={undo} alt=""/></p>  
             </div>
             {/* ----------- end of swap 3------------ */}
@@ -245,13 +295,18 @@ class App extends Component {
              {/* -----------swap 4------------ */}
             <div>
                <div>
-                <img width="100" height="100" className="shade" src={require(`../images/Shades/swap4.webp`)} alt="shade"/>
+                <img onClick={()=>this.intervalManager(false)} width="100" height="100" className="shade" src={require(`../images/Shades/swap4.jpg`)} alt="shade"/>
                 <br/>
-                Hello Happy Soft Blur Foundation 
+                Benefit Cosmetics
                 </div>
                 <p className="shadesDetails">light-medium coverage liquid foundation broad spectrum SPF 15 sunscreen</p>
-                <p className="makeLink" onClick={() => this.urlHandlerForOtherSite('https://www.benefitcosmetics.com/us/en/product/hello-happy-soft-blur-foundation')}>Add to Bag</p>
-                <span onClick={()=> this.showMoreHandler(5)} className="showMore"><small>Shop More Eye</small> </span>
+                <p className="makeLink" onClick={() => this.urlHandlerForNewWindow('https://www.benefitcosmetics.com/us/en/product/hello-happy-soft-blur-foundation')}>
+                <span>
+                ENTER BENEFIT COSMETICS
+                </span>
+                </p>
+                <span onClick={()=> this.showMoreHandler(5)} className="findMoreBenefit"><small>
+                FIND MORE </small> </span>
                 <p><img width="30" className="retake" onClick={this.cancelEvent} src={undo} alt=""/></p>  
             </div>
             {/* ----------- end of swap 4------------ */}
@@ -259,13 +314,17 @@ class App extends Component {
             {/* -----------swap 5------------ */}
             <div>
                <div>
-                <img width="100" height="100" className="shade" src={require(`../images/Shades/swap5.jpg`)} alt="shade"/>
+                <img onClick={()=>this.intervalManager(false)} width="100" height="100" className="shade" src={require(`../images/Shades/swap5.jpg`)} alt="shade"/>
                 <br/>
-                Natural Radiant Longwear Foundation 
+                NARS Cosmetics 
                 </div>
                 <p className="shadesDetails" style={{textTransform: 'lowercase'}}>A UNIQUELY LIGHTWEIGHT FOUNDATION THAT PROVIDES 16 HOURS OF FADE-RESISTANT WEAR WITH FULL-POWERED RADIANCE.</p>
-                <p className="makeLink" onClick={() => this.urlHandlerForOtherSite('https://www.narscosmetics.com/USA/mali-natural-radiant-longwear-foundation/0607845066323.html')}>Add to Bag</p>
-                <span onClick={()=> this.showMoreHandler(0)} className="showMore"><small>Shop More Eye</small> </span>
+                <p className="makeLink" onClick={() => this.urlHandlerForNewWindow('https://www.narscosmetics.com/USA/mali-natural-radiant-longwear-foundation/0607845066323.html')}>
+                <span>
+                ENTER MAKE UP FOREVER
+                </span>
+                </p>
+                <span onClick={()=> this.showMoreHandler(0)} className="showMore"><small>FIND MORE</small> </span>
                 <p><img width="30" className="retake" onClick={this.cancelEvent} src={undo} alt=""/></p>  
             </div>
             {/* ----------- end of swap 5------------ */}     
