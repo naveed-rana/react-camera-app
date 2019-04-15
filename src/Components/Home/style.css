@@ -7,6 +7,10 @@
   height: 68px;
 }
 
+.descriptions{
+  color:red;
+}
+
 .cancel:hover {
   cursor: pointer;
 }
@@ -15,6 +19,7 @@
   -webkit-filter: brightness(20%); /* Safari 6.0 - 9.0 */
   filter: brightness(20%);
 }
+
 
 .loader {
   width: 150px;
@@ -41,10 +46,20 @@ video {
   max-width: 100%;
 }
 .imgShow {
-  width: 100% !important;
-  height: 100vh !important;
+  /* width: 100% !important; */
+  /* height: 100vh !important; */
+  text-align:center !important;
 }
+.imgShowRestrict{
+   width: 100% !important; 
+   /* height: 100vh !important; */
 
+}
+#imgShowRestrict{
+  /* width: 100% !important;  */
+  height: 100vh !important;
+
+}
 #container-circles {
   left: 44%;
 }
@@ -117,7 +132,7 @@ video {
 
 .camIcon {
     position: absolute;
-    bottom: 26px;
+    bottom: 30px;
     left: 58%;
     color: white;
     z-index: 154;

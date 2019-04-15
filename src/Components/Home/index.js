@@ -23,6 +23,8 @@ class App extends Component {
       loader: false,
       card: false,
       index: 0,
+      restrictImageWidth:false,
+      restrictImageHeight:false,
       cardData: [
         [
           "https://www.fentybeauty.com/pro-filtr/soft-matte-longwear-foundation/FB30006.html?dwvar_FB30006_color=FB0240",
@@ -241,11 +243,34 @@ class App extends Component {
 
   fileChangeHandler = e => {
     console.log("image", e.target.files[0]);
+    this.setState({restrictImageWidth:false,restrictImageHeight:false})
+    var img = new Image();
+   let  _this = this;
+    img.onload = function() {
+      
+      console.log(this.width + "x" + this.height)
+      console.log(window.innerWidth);
+       if(this.width > window.innerWidth){
+         _this.setState({
+           restrictImageWidth:true
+         })
+       }
+
+       if(this.height > window.innerHeight){
+        _this.setState({
+          restrictImageHeight:true
+        })
+      }
+       
+      _this.setState({
+        cameraOn: false,
+        imgShow: true,
+      })
+    };
+    img.src =  URL.createObjectURL(e.target.files[0]);
 
     this.setState({
       loader: true,
-      cameraOn: false,
-      imgShow: true,
       image: URL.createObjectURL(e.target.files[0])
     });
 
@@ -274,13 +299,16 @@ class App extends Component {
           loader: false,
           index: 0,
           card: true,
-          cardData: "false"
+          cardData: false
         });
       });
   };
 
   render() {
-    const { index, cardData } = this.state;
+    const { index, cardData,restrictImageWidth,restrictImageHeight } = this.state;
+
+    console.log('image',this.state.restrictImageWidth);
+    
 
     return (
       <div className="App">
@@ -318,7 +346,7 @@ class App extends Component {
                 <label htmlFor="file-input3">
                   <img
                     style={{ width: "42px" }}
-                    src={require("../images/cam.png")}
+                    src={require("../images/cams.png")}
                   />
                 </label>
                 <input
@@ -341,10 +369,11 @@ class App extends Component {
                 alt="cancel"
               />
             ) : (
-              <div>
+              <div style={{ textAlign: "center" }}>
+              
                 <img
-                 
-                  className="imgShow"
+                  id={restrictImageHeight ? "imgShowRestrict" : ""}
+                  className={restrictImageWidth?"imgShowRestrict":"imgShow"}
                   src={this.state.image}
                   alt="takephoto"
                 />
@@ -361,7 +390,7 @@ class App extends Component {
         )}
         {this.state.card ? (
           <div id="displayContainer">
-            {cardData === "false" ||
+            {cardData == false ||
             cardData === "not-success" ||
             cardData === "[info] No Face Found. Try Capturing again" ? (
               <div>
@@ -426,7 +455,7 @@ class App extends Component {
                     <b> FENTY BEAUTY Pro Filt'r Mattee Longwear Foundation</b>
                   </p>
                   <p onClick={() => this.intervalManager(false)}>
-                    <b>{cardData[0][2]}</b>
+                    <b className="descriptions">{cardData[0][2]}</b>
                   </p>
                   {/* <p
                     className="makeLink"
@@ -469,7 +498,7 @@ class App extends Component {
                             <img
                               className="retake"
                               onClick={() => this.urlHandler(cardData[0][0])}
-                              style={{ width: "42px" }}
+                              style={{ width: "30px" }}
                               src={require("../images/enter.png")}
                               alt=""
                             />
@@ -486,7 +515,7 @@ class App extends Component {
                             <img
                               className="retake"
                               onClick={this.cancelEvent}
-                              style={{ width: "42px" }}
+                              style={{ width: "30px" }}
                               src={require("../images/cam.png")}
                               alt=""
                             />
@@ -499,7 +528,7 @@ class App extends Component {
                             <img
                               className="retake"
                               onClick={this.fbs_click}
-                              style={{ width: "42px" }}
+                              style={{ width: "30px" }}
                               src={require("../images/share.png")}
                               alt=""
                             />
@@ -531,7 +560,9 @@ class App extends Component {
                       width="100"
                       height="100"
                       className="shade"
-                      src={require(`../images/Shades/10-DIOR/${cardData[1][0].slice(-3)}.jpg`)}
+                      src={require(`../images/Shades/10-DIOR/${cardData[1][0].slice(
+                        -3
+                      )}.jpg`)}
                       alt="shade"
                     />
                     <img
@@ -551,7 +582,7 @@ class App extends Component {
                     <b>DIOR Diorskin Forever Undercover Foundation</b>
                   </p>
                   <p onClick={() => this.intervalManager(false)}>
-                    <b>{cardData[1][2]}</b>
+                    <b className="descriptions">{cardData[1][2]}</b>
                   </p>
                   {/* <p
                     className="makeLink"
@@ -603,7 +634,7 @@ class App extends Component {
                             <img
                               className="retake"
                               onClick={() => this.urlHandler(cardData[1][0])}
-                              style={{ width: "42px" }}
+                              style={{ width: "30px" }}
                               src={require("../images/enter.png")}
                               alt=""
                             />
@@ -620,7 +651,7 @@ class App extends Component {
                             <img
                               className="retake"
                               onClick={this.cancelEvent}
-                              style={{ width: "42px" }}
+                              style={{ width: "30px" }}
                               src={require("../images/cam.png")}
                               alt=""
                             />
@@ -633,7 +664,7 @@ class App extends Component {
                             <img
                               className="retake"
                               onClick={this.fbs_click}
-                              style={{ width: "42px" }}
+                              style={{ width: "30px" }}
                               src={require("../images/share.png")}
                               alt=""
                             />
@@ -687,7 +718,7 @@ class App extends Component {
                     <b>KAT VON D Lock-It Foundation</b>
                   </p>
                   <p onClick={() => this.intervalManager(false)}>
-                    <b>{cardData[2][2]}</b>
+                    <b className="descriptions">{cardData[2][2]}</b>
                   </p>
                   {/* <p
                     className="makeLink"
@@ -739,7 +770,7 @@ class App extends Component {
                             <img
                               className="retake"
                               onClick={() => this.urlHandler(cardData[2][0])}
-                              style={{ width: "42px" }}
+                              style={{ width: "30px" }}
                               src={require("../images/enter.png")}
                               alt=""
                             />
@@ -756,7 +787,7 @@ class App extends Component {
                             <img
                               className="retake"
                               onClick={this.cancelEvent}
-                              style={{ width: "42px" }}
+                              style={{ width: "30px" }}
                               src={require("../images/cam.png")}
                               alt=""
                             />
@@ -769,7 +800,7 @@ class App extends Component {
                             <img
                               className="retake"
                               onClick={this.fbs_click}
-                              style={{ width: "42px" }}
+                              style={{ width: "30px" }}
                               src={require("../images/share.png")}
                               alt=""
                             />
@@ -823,7 +854,7 @@ class App extends Component {
                     <b>KAT VON D Lock-It Foundation Mini</b>
                   </p>
                   <p onClick={() => this.intervalManager(false)}>
-                    <b>{cardData[3][2]}</b>
+                    <b className="descriptions">{cardData[3][2]}</b>
                   </p>
                   {/* <p
                     className="makeLink"
@@ -875,7 +906,7 @@ class App extends Component {
                             <img
                               className="retake"
                               onClick={() => this.urlHandler(cardData[3][0])}
-                              style={{ width: "42px" }}
+                              style={{ width: "30px" }}
                               src={require("../images/enter.png")}
                               alt=""
                             />
@@ -892,7 +923,7 @@ class App extends Component {
                             <img
                               className="retake"
                               onClick={this.cancelEvent}
-                              style={{ width: "42px" }}
+                              style={{ width: "30px" }}
                               src={require("../images/cam.png")}
                               alt=""
                             />
@@ -905,7 +936,7 @@ class App extends Component {
                             <img
                               className="retake"
                               onClick={this.fbs_click}
-                              style={{ width: "42px" }}
+                              style={{ width: "30px" }}
                               src={require("../images/share.png")}
                               alt=""
                             />
@@ -959,7 +990,7 @@ class App extends Component {
                     <b>MARC JACOBS Shameless Youthful Look Foundation </b>
                   </p>
                   <p onClick={() => this.intervalManager(false)}>
-                    <b>{cardData[4][2]}</b>
+                    <b className="descriptions">{cardData[4][2]}</b>
                   </p>
                   {/* <p
                     className="makeLink"
@@ -1011,7 +1042,7 @@ class App extends Component {
                             <img
                               className="retake"
                               onClick={() => this.urlHandler(cardData[4][0])}
-                              style={{ width: "42px" }}
+                              style={{ width: "30px" }}
                               src={require("../images/enter.png")}
                               alt=""
                             />
@@ -1028,7 +1059,7 @@ class App extends Component {
                             <img
                               className="retake"
                               onClick={this.cancelEvent}
-                              style={{ width: "42px" }}
+                              style={{ width: "30px" }}
                               src={require("../images/cam.png")}
                               alt=""
                             />
@@ -1041,7 +1072,7 @@ class App extends Component {
                             <img
                               className="retake"
                               onClick={this.fbs_click}
-                              style={{ width: "42px" }}
+                              style={{ width: "30px" }}
                               src={require("../images/share.png")}
                               alt=""
                             />
@@ -1095,7 +1126,7 @@ class App extends Component {
                     <b>MARC JACOBS Re(marc)able Full Cover Foundation</b>
                   </p>
                   <p onClick={() => this.intervalManager(false)}>
-                    <b>{cardData[5][2]}</b>
+                    <b className="descriptions">{cardData[5][2]}</b>
                   </p>
                   {/* <p
                     className="makeLink"
@@ -1146,7 +1177,7 @@ class App extends Component {
                             <img
                               className="retake"
                               onClick={() => this.urlHandler(cardData[5][0])}
-                              style={{ width: "42px" }}
+                              style={{ width: "30px" }}
                               src={require("../images/enter.png")}
                               alt=""
                             />
@@ -1163,7 +1194,7 @@ class App extends Component {
                             <img
                               className="retake"
                               onClick={this.cancelEvent}
-                              style={{ width: "42px" }}
+                              style={{ width: "30px" }}
                               src={require("../images/cam.png")}
                               alt=""
                             />
@@ -1176,7 +1207,7 @@ class App extends Component {
                             <img
                               className="retake"
                               onClick={this.fbs_click}
-                              style={{ width: "42px" }}
+                              style={{ width: "30px" }}
                               src={require("../images/share.png")}
                               alt=""
                             />
@@ -1208,6 +1239,7 @@ class App extends Component {
                       width="100"
                       height="100"
                       className="shade"
+                      style={{ backgroundColor: "#fff" }}
                       src={require(`../images/Shades/6-MAKE UP FOREVER ULTRA HD FOUNDATION/${cardData[6][0].slice(
                         -3
                       )}.jpg`)}
@@ -1233,7 +1265,7 @@ class App extends Component {
                     </b>
                   </p>
                   <p onClick={() => this.intervalManager(false)}>
-                    <b>{cardData[6][2]}</b>
+                    <b className="descriptions">{cardData[6][2]}</b>
                   </p>
                   {/* <p
                     className="makeLink"
@@ -1285,7 +1317,7 @@ class App extends Component {
                             <img
                               className="retake"
                               onClick={() => this.urlHandler(cardData[6][0])}
-                              style={{ width: "42px" }}
+                              style={{ width: "30px" }}
                               src={require("../images/enter.png")}
                               alt=""
                             />
@@ -1302,7 +1334,7 @@ class App extends Component {
                             <img
                               className="retake"
                               onClick={this.cancelEvent}
-                              style={{ width: "42px" }}
+                              style={{ width: "30px" }}
                               src={require("../images/cam.png")}
                               alt=""
                             />
@@ -1315,7 +1347,7 @@ class App extends Component {
                             <img
                               className="retake"
                               onClick={this.fbs_click}
-                              style={{ width: "42px" }}
+                              style={{ width: "30px" }}
                               src={require("../images/share.png")}
                               alt=""
                             />
@@ -1347,6 +1379,7 @@ class App extends Component {
                       width="100"
                       height="100"
                       className="shade"
+                      style={{ backgroundColor: "#fff" }}
                       src={require(`../images/Shades/7-MAKE UP FOREVER Water Blend Face & Body FOUNDATION/${cardData[7][0].slice(
                         -3
                       )}.jpg`)}
@@ -1369,7 +1402,7 @@ class App extends Component {
                     <b>MAKE UP FOREVER Water Blend Face & Body Foundation</b>
                   </p>
                   <p onClick={() => this.intervalManager(false)}>
-                    <b>{cardData[7][2]}</b>
+                    <b className="descriptions">{cardData[7][2]}</b>
                   </p>
                   {/* <p
                     className="makeLink"
@@ -1421,7 +1454,7 @@ class App extends Component {
                             <img
                               className="retake"
                               onClick={() => this.urlHandler(cardData[7][0])}
-                              style={{ width: "42px" }}
+                              style={{ width: "30px" }}
                               src={require("../images/enter.png")}
                               alt=""
                             />
@@ -1438,7 +1471,7 @@ class App extends Component {
                             <img
                               className="retake"
                               onClick={this.cancelEvent}
-                              style={{ width: "42px" }}
+                              style={{ width: "30px" }}
                               src={require("../images/cam.png")}
                               alt=""
                             />
@@ -1451,7 +1484,7 @@ class App extends Component {
                             <img
                               className="retake"
                               onClick={this.fbs_click}
-                              style={{ width: "42px" }}
+                              style={{ width: "30px" }}
                               src={require("../images/share.png")}
                               alt=""
                             />
@@ -1505,7 +1538,7 @@ class App extends Component {
                     <b>MAKE UP FOREVER Matte Velvet Skin Foundation</b>
                   </p>
                   <p onClick={() => this.intervalManager(false)}>
-                    <b>{cardData[8][2]}</b>
+                    <b className="descriptions">{cardData[8][2]}</b>
                   </p>
                   {/* <p
                     className="makeLink"
@@ -1557,7 +1590,7 @@ class App extends Component {
                             <img
                               className="retake"
                               onClick={() => this.urlHandler(cardData[6][0])}
-                              style={{ width: "42px" }}
+                              style={{ width: "30px" }}
                               src={require("../images/enter.png")}
                               alt=""
                             />
@@ -1574,7 +1607,7 @@ class App extends Component {
                             <img
                               className="retake"
                               onClick={this.cancelEvent}
-                              style={{ width: "42px" }}
+                              style={{ width: "30px" }}
                               src={require("../images/cam.png")}
                               alt=""
                             />
@@ -1587,7 +1620,7 @@ class App extends Component {
                             <img
                               className="retake"
                               onClick={this.fbs_click}
-                              style={{ width: "42px" }}
+                              style={{ width: "30px" }}
                               src={require("../images/share.png")}
                               alt=""
                             />
@@ -1645,7 +1678,7 @@ class App extends Component {
                     <b>BENEFIT COSMETICS Hello Happy Soft Blur Foundation</b>
                   </p>
                   <p onClick={() => this.intervalManager(false)}>
-                    <b>{cardData[9][2]}</b>
+                    <b className="descriptions">{cardData[9][2]}</b>
                   </p>
                   {/* <p
                     className="makeLink"
@@ -1696,7 +1729,7 @@ class App extends Component {
                             <img
                               className="retake"
                               onClick={() => this.urlHandler(cardData[9][0])}
-                              style={{ width: "42px" }}
+                              style={{ width: "30px" }}
                               src={require("../images/enter.png")}
                               alt=""
                             />
@@ -1713,7 +1746,7 @@ class App extends Component {
                             <img
                               className="retake"
                               onClick={this.cancelEvent}
-                              style={{ width: "42px" }}
+                              style={{ width: "30px" }}
                               src={require("../images/cam.png")}
                               alt=""
                             />
@@ -1726,7 +1759,7 @@ class App extends Component {
                             <img
                               className="retake"
                               onClick={this.fbs_click}
-                              style={{ width: "42px" }}
+                              style={{ width: "30px" }}
                               src={require("../images/share.png")}
                               alt=""
                             />
@@ -1782,7 +1815,7 @@ class App extends Component {
                     <b>BENEFIT COSMETICS Hello Happy Soft Blur Foundation</b>
                   </p>
                   <p>
-                    <b>{cardData[9][2]}</b>
+                    <b className="descriptions"> {cardData[9][2]}</b>
                   </p>
                   <p
                     className="makeLink"
